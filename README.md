@@ -43,7 +43,7 @@ iter_list = ["The chess is, well, chess. You can choose different themes for you
              "This is a great chess app especially for beginners. The reason I rate four stars is there is one large problem with the lessons, as far as I can tell there's no transcript and no subtitles. Which can be a big problem for the hearing impared, people with audio processing issues, or people that are in an environment that they can't turn the sound on their phone.",
              "Overall a great app and has led me to become a much better Chess player, and I actually won a Chess tournament in my middle school because of it. It does annoy me that there is a lot of stuff locked behind a subscription. But that is to be expected. EDIT: My trophies are working now. Thank you for the fix. But now I getting matched in leagues with tryhards grinding to 500 trophies when top 3 used to be like 175 trophies. But I guess it can't be helped. Still gets five stars for trophies working."]
 
-generator = SynGen(anyscale_API_KEY = "esecret_74eqlnepmyirpiugq7lrcahrww",
+generator = SynGen(anyscale_API_KEY = "YOUR ANYSCALE API KEY",
                    intro_prompt = intro_prompt,
                    json_prompt = json_prompt
                    )
