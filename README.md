@@ -2,14 +2,17 @@
 
 Create finetuning/distillation data fast! Multi-model support to de-risk against single model biases.
 
+- Multi-model support through Anyscale endpoints [Anyscale endpoint key required](https://www.anyscale.com/endpoints)
+- Structured JSON output
+
 ## Work in Progress (WIP)
 
 ## Rationale
 
 1. Create finetuning/distillation data fast and inexpensively.
-2. Focus on using multiple models (e.g., meta-llama/Llama-2-7b-chat-hf, mistralai/Mistral-7B-Instruct-v0.1) to mitigate single model biases while generating new data.
-3. Include non-LLM and LLM-based JSON repair mechanisms for outputting structured data.
-4. Can work on top of rationale-based and step-by-step synthetic data generation, as explained in:
+2. Focus on using multiple models (e.g., meta-llama/Llama-2-7b-chat-hf, mistralai/Mistral-7B-Instruct-v0.1 etc.) to mitigate single model biases while generating new data.
+3. Includes JSON repair mechanisms for outputting structured data.
+4. Can work on top of rationale-based step-by-step and curriculum learning finetuning methods:
    - [Distilling Step-by-Step! Outperforming Larger Language Models with Less Training Data and Smaller Model Sizes](https://arxiv.org/pdf/2305.02301.pdf)
    - [Orca: Progressive Learning from Complex Explanation Traces of GPT-4](https://arxiv.org/pdf/2306.02707.pdf)
 
@@ -18,8 +21,15 @@ Create finetuning/distillation data fast! Multi-model support to de-risk against
 ```bash
 python -m venv venv  # Create a new virtual environment
 source venv/bin/activate  # Activate the virtual environment
-pip install -r requirements.txt  # Install packages
+git clone https://github.com/AnanyaP-WDW/syngen.git
+cd SYNGEN
+pip install .
 ```
+#### check for correct installation
+```bash
+python -c "import syngen"
+```
+
 ```python
 USE_CASE = "customer review"
 intro_prompt = f"""You are a helpful, intelligent chatbot. Create labeled data in json format using the given {USE_CASE}. For the {USE_CASE} output NPS score, ticket description, sentiment, customer insights, class of customer insights, class of ticket description and reasoning"""
@@ -43,6 +53,7 @@ iter_list = ["The chess is, well, chess. You can choose different themes for you
              "This is a great chess app especially for beginners. The reason I rate four stars is there is one large problem with the lessons, as far as I can tell there's no transcript and no subtitles. Which can be a big problem for the hearing impared, people with audio processing issues, or people that are in an environment that they can't turn the sound on their phone.",
              "Overall a great app and has led me to become a much better Chess player, and I actually won a Chess tournament in my middle school because of it. It does annoy me that there is a lot of stuff locked behind a subscription. But that is to be expected. EDIT: My trophies are working now. Thank you for the fix. But now I getting matched in leagues with tryhards grinding to 500 trophies when top 3 used to be like 175 trophies. But I guess it can't be helped. Still gets five stars for trophies working."]
 
+request = GenRequest(seed_data = iter_list)
 generator = SynGen(anyscale_API_KEY = "YOUR ANYSCALE API KEY",
                    intro_prompt = intro_prompt,
                    json_prompt = json_prompt
@@ -60,7 +71,7 @@ generator.run(iter_list)
    'class of customer insights': 'Product Feature',
    'class of ticket description': 'Feature Request / Feedback',
    'rationale': 'The customer has given a high NPS score of 8, indicating a positive sentiment towards the app. They appreciate the different themes and game types. However, they have mentioned that premium features are behind a paywall, indicating a request for free access to these features or a feature request for more flexibility in accessing lessons, game review, and puzzles.'},
-  1: {'NPS score': '4',
+  1: {'NPS score': '8',
    'ticket description': 'Great chess app for beginners, but lacks transcript and subtitles',
    'sentiment': 'Positive',
    'customer insights': 'App is good for beginners, but needs improvements for accessibility',
@@ -77,3 +88,6 @@ generator.run(iter_list)
  {})
 ```
 
+## Requirements
+- Anyscale endpoint API key required
+- Only JSON output format from LLM's
