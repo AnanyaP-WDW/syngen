@@ -22,7 +22,7 @@ Create finetuning/distillation data fast! Multi-model support to de-risk against
 python -m venv venv  # Create a new virtual environment
 source venv/bin/activate  # Activate the virtual environment
 git clone https://github.com/AnanyaP-WDW/syngen.git
-cd SYNGEN
+cd syngen
 pip install .
 ```
 #### check for correct installation
